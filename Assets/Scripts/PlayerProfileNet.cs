@@ -22,7 +22,14 @@ public class PlayerProfileNet : NetworkIdentity
     {
         if (isOwner)
         {
-            SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+            if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+            {
+                SetPlayerNameServerRpc("Guest");
+            } else
+            {
+                SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+            }
+            
         }
     }
 

@@ -210,7 +210,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: 1.8}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6100595719749331196
@@ -378,13 +378,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3755058787888559867}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.32608065, y: -0, z: -0.000000044703487, w: 0.945342}
-  m_LocalPosition: {x: 0, y: 3.16, z: -1.65}
+  m_LocalRotation: {x: 0.17293568, y: -0.00000005960463, z: -0.00000005587934, w: 0.9849332}
+  m_LocalPosition: {x: 0, y: 2.83, z: -3.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 32772957523220341}
-  m_LocalEulerAnglesHint: {x: 38.062, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.917, y: 0, z: 0}
 --- !u!20 &4782513868274280472
 Camera:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -542,6 +542,9 @@ GameObject:
   - component: {fileID: 5823048965013284536}
   - component: {fileID: 7072952586185253205}
   - component: {fileID: -6142990091270304418}
+  - component: {fileID: 8785917656572963208}
+  - component: {fileID: -7243015798772468869}
+  - component: {fileID: 1572107192439911494}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -604,9 +607,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb36eb8549a745b47a87c345d3674eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   speed: 10
-  inputField: {fileID: 0}
+  jumpHeight: 2
+  gravity: -9.81
   mouseSensi: 2
+  animator: {fileID: 0}
 --- !u!114 &5823048965013284536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,6 +703,78 @@ MonoBehaviour:
   _directChildren: []
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
+--- !u!143 &8785917656572963208
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.5
+  m_Radius: 0.7
+  m_SlopeLimit: 45
+  m_StepOffset: 0.2
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0.81, z: 0}
+--- !u!95 &-7243015798772468869
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 7812105c38df7f5498f70d964f31d821, type: 3}
+  m_Controller: {fileID: 9100000, guid: 3262cf28c01ed14419dd1955ab59ff8a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1572107192439911494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b598b9d8509d64abb9fdaf07fa3f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _animator: {fileID: -7243015798772468869}
+  _ownerAuth: 1
+  _autoSyncParameters: 1
+  _dontSyncParameters: []
 --- !u!1001 &7195023116569512596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -794,5 +880,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.37
+  m_Radius: 1.15
   m_Center: {x: 0, y: 1.61, z: 0}
