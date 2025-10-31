@@ -26,30 +26,33 @@ public class PlayerMovementNet : NetworkIdentity
     public LayerMask groundMask;
     private readonly Collider[] groundHits = new Collider[4];
     public float normalizedVelocity { get; private set; }
+    private bool cursorLocked = true;
 
-
-    bool GroundCheckDriver(Transform feetTransformR, Transform feetTransformL, float sphereRadius, LayerMask groundMask)
-    {
-        int hitCountR = Physics.OverlapSphereNonAlloc(feetTransformR.position, sphereRadius, groundHits, groundMask);
-        bool rightGrounded = hitCountR > 0;
-
-        int hitCountL = Physics.OverlapSphereNonAlloc(feetTransformL.position, sphereRadius, groundHits, groundMask);
-        bool leftGrounded = hitCountL > 0;
-
-        return rightGrounded || leftGrounded;
-    }
 
     void Start()
     {
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
         if (!isOwner) return;
-        if (inputField != null && inputField.isFocused) return;
+
+
+        //if (inputField != null && inputField.isFocused) return;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            cursorLocked = !cursorLocked;
+            Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !cursorLocked;
+        }
+
+        
         float moveHorizontal, moveVertical;
 
         GroundCheck();
@@ -67,6 +70,17 @@ public class PlayerMovementNet : NetworkIdentity
         float inputMagnitude = new Vector2(moveHorizontal, moveVertical).magnitude;
         normalizedVelocity = Mathf.Clamp01(inputMagnitude); // 0 = idle, 1 = full input
         if (animator != null) animator.SetFloat("Velocity", normalizedVelocity);
+    }
+
+    bool GroundCheckDriver(Transform feetTransformR, Transform feetTransformL, float sphereRadius, LayerMask groundMask)
+    {
+        int hitCountR = Physics.OverlapSphereNonAlloc(feetTransformR.position, sphereRadius, groundHits, groundMask);
+        bool rightGrounded = hitCountR > 0;
+
+        int hitCountL = Physics.OverlapSphereNonAlloc(feetTransformL.position, sphereRadius, groundHits, groundMask);
+        bool leftGrounded = hitCountL > 0;
+
+        return rightGrounded || leftGrounded;
     }
 
     private void GroundCheck()

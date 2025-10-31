@@ -24,6 +24,8 @@ public class SendMsgNet : NetworkIdentity
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            if (string.IsNullOrWhiteSpace(inputField.text)) return;
+
             textToSend = $"[{playerProfile.networkIdentity.localPlayer.Value}] {playerProfile.name_text.text}: " + inputField.text;
             SendToAll(textToSend);
             inputField.text = null;
