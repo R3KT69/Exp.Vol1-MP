@@ -8,6 +8,7 @@ public class Connection_Menu : MonoBehaviour
     public static string PortAddr;
     public static string startMode;
     public static string PlayerName;
+    public string sceneName;
     public TextMeshProUGUI text;
 
     void Update()
@@ -21,13 +22,13 @@ public class Connection_Menu : MonoBehaviour
     public void Start_Srv_host()
     {
         startMode = "Host";
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
     public void Start_Srv_client()
     {
         startMode = "Client";
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     } 
     
     public void SaveConnection()
