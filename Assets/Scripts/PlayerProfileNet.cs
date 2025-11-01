@@ -9,28 +9,18 @@ public class PlayerProfileNet : NetworkIdentity
     public TMP_Text health_text, name_text;
     public Renderer rend;
     public SyncVar<int> health = new(initialValue: 100);
-    
+
     public NetworkIdentity networkIdentity;
+    public SendMsgNet sendMsgNet;
+    public NetworkDriver networkDriver;
+    
 
     private void Awake()
     {
         health.onChanged += OnHealthChanged;
         networkIdentity = GetComponent<NetworkIdentity>();
-    }
+        sendMsgNet = GetComponent<SendMsgNet>();
 
-    private void Start()
-    {
-        if (isOwner)
-        {
-            if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
-            {
-                SetPlayerNameServerRpc("Guest");
-            } else
-            {
-                SetPlayerNameServerRpc(Connection_Menu.PlayerName);
-            }
-            
-        }
     }
 
     protected override void OnDestroy()
@@ -43,7 +33,7 @@ public class PlayerProfileNet : NetworkIdentity
     private void OnHealthChanged(int newValue)
     {
         health_text.text = newValue.ToString();
-        Debug.Log($"Health : {newValue}");
+        //Debug.Log($"Health : {newValue}");
     }
 
     protected override void OnSpawned()
@@ -60,9 +50,23 @@ public class PlayerProfileNet : NetworkIdentity
         }
         else
         {
-            // This is the local player's camera
+            if (isOwner)
+            {
+                if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+                {
+                    SetPlayerNameServerRpc("Guest");
+                }
+                else
+                {
+                    SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+                }
+
+            }
+            
             cam.gameObject.SetActive(true);
             cam.tag = "MainCamera";
+            sendMsgNet.SendToAll($"{Connection_Menu.PlayerName} joined the game!");
+            
         }
     }
 
