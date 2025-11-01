@@ -22,7 +22,14 @@ public class PlayerProfileNet : NetworkIdentity
     {
         if (isOwner)
         {
-            SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+            if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+            {
+                SetPlayerNameServerRpc("Guest");
+            } else
+            {
+                SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+            }
+            
         }
     }
 
@@ -102,13 +109,14 @@ public class PlayerProfileNet : NetworkIdentity
     }
 
     [ServerRpc]
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health.value -= damage;
 
         if (health.value <= 0)
         {
             health.value = 0;
+            ChangeNameplateColor(Color.red);
             Debug.Log("Has Died");
         }
     }
@@ -117,6 +125,12 @@ public class PlayerProfileNet : NetworkIdentity
     private void SetPlayerNameServerRpc(string name)
     {
         name_text.text = name;
+    }
+
+    [ObserversRpc(bufferLast: true)]
+    public void ChangeNameplateColor(Color color)
+    {
+        name_text.color = color;
     }
 
 /*
